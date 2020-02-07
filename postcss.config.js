@@ -1,8 +1,6 @@
 module.exports = {
   plugins: {
-    'autoprefixer': {
-      browsers: ['Android >= 4.0', 'iOS >= 8']
-    }, // 用来自动处理浏览器前缀的一个插件。
+    'autoprefixer': {}, // 用来自动处理浏览器前缀的一个插件。
     'postcss-pxtorem': {
       'rootValue': 75, // 设计稿宽度的1/10
       'unitPrecision': 5, // 小数位
