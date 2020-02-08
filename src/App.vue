@@ -20,16 +20,13 @@ export default {
   },
   computed: {},
   watch: {},
-  methods: {
-
-  },
-  created () {
-
-  },
-  mounted () {
-
-  }
+  methods: {},
+  created () {},
+  mounted () {}
 }
 </script>
 <style lang="scss">
+.a {
+  width: 10px;
+}
 </style>
