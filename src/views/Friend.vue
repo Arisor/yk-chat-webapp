@@ -1,6 +1,6 @@
 <template>
   <div class=''>
-    联系(暂未开发)
+    联系人(暂未开发)
   </div>
 </template>
 

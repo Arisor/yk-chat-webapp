@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <van-nav-bar v-if="$route.meta.header" left-arrow :title="title" @click-left="handleBack" />
     <keep-alive>
       <router-view class="main-container" v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
@@ -15,14 +16,44 @@
 export default {
   data () {
     return {
-      active: 0
+      active: 0,
+      title: '消息'
     }
   },
   computed: {},
-  watch: {},
-  methods: {},
+  watch: {
+    active (data) {
+      switch (data) {
+        case 0:
+          this.title = '消息'
+          break
+        case 1:
+          this.title = '联系人'
+          break
+        case 2:
+          this.title = '我的'
+          break
+      }
+    }
+  },
+  methods: {
+    handleBack () {
+      this.$router.push({
+        name: 'login'
+      })
+    }
+  },
   created () {},
-  mounted () {}
+  mounted () {},
+  beforeUpdate () {
+    if (this.$route.name === 'msg') {
+      this.active = 0
+    } else if (this.$route.name === 'friend') {
+      this.active = 1
+    } else if (this.$route.name === 'me') {
+      this.active = 2
+    }
+  }
 }
 </script>
 <style lang="scss">
