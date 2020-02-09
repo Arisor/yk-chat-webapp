@@ -8,9 +8,9 @@
       @click-left="handleBack"
     />
     <keep-alive>
-      <router-view class="main-container" v-if="$route.meta.keepAlive"></router-view>
+      <router-view class="cant-main-container" v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
-    <router-view class="main-container" v-if="!$route.meta.keepAlive"></router-view>
+    <router-view class="cant-main-container" v-if="!$route.meta.keepAlive"></router-view>
     <van-tabbar v-model="active" v-if="$route.meta.footer" fixed>
       <van-tabbar-item icon="more" replace to="/msg" info="80">消息</van-tabbar-item>
       <van-tabbar-item icon="friends" replace to="/friend">联系人</van-tabbar-item>
@@ -66,9 +66,9 @@ export default {
 .van-nav-bar{
   background: -webkit-linear-gradient(right, #1989fa, #4ecff5);
 }
-.main-container {
-  margin-top: 46PX;
-  height: calc(100vh - 96PX);
+.cant-main-container {
+  margin-top: 46px;
+  height: calc(100vh - 96px);
   overflow: auto;
 }
 </style>

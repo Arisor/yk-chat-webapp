@@ -3,11 +3,11 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-cell
         v-for="item in list"
-        :key="item"
+        :key="item.id"
         size="large"
         title="老🐖"
         value="00:59"
-        label="喂喂喂"
+        :label="item.word || '喂喂喂'"
         @click="handleClick"
       >
         <van-image
@@ -27,7 +27,9 @@ export default {
   components: {},
   data () {
     return {
-      list: [],
+      list: [{
+
+      }],
       loading: false,
       finished: false
     }
@@ -39,8 +41,12 @@ export default {
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
       setTimeout(() => {
+        const words = ['喂喂喂', '垃圾', '沙皮']
         for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
+          this.list.push({
+            id: this.list.length + 1,
+            word: words[Math.floor(Math.random() * 3)]
+          })
         }
 
         // 加载状态结束
