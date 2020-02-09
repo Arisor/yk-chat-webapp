@@ -26,7 +26,9 @@ import {
   List,
   sticky,
   CellGroup,
-  NavBar
+  NavBar,
+  Image,
+  Toast
 } from 'vant'
 let comps = [
   Button,
@@ -51,7 +53,9 @@ let comps = [
   List,
   sticky,
   CellGroup,
-  NavBar
+  NavBar,
+  Image,
+  Toast
 ]
 for (let comp of comps) {
   Vue.use(comp)

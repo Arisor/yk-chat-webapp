@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <van-nav-bar v-if="$route.meta.header" left-arrow :title="title" @click-left="handleBack" />
+    <van-nav-bar
+      v-if="$route.meta.header"
+      fixed
+      left-arrow
+      :title="title"
+      @click-left="handleBack"
+    />
     <keep-alive>
       <router-view class="main-container" v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
     <router-view class="main-container" v-if="!$route.meta.keepAlive"></router-view>
-    <van-tabbar v-model="active" v-if="$route.meta.footer">
-      <van-tabbar-item icon="more" replace to="/msg">消息</van-tabbar-item>
+    <van-tabbar v-model="active" v-if="$route.meta.footer" fixed>
+      <van-tabbar-item icon="more" replace to="/msg" info="80">消息</van-tabbar-item>
       <van-tabbar-item icon="friends" replace to="/friend">联系人</van-tabbar-item>
       <van-tabbar-item icon="manager" replace to="/me">我的</van-tabbar-item>
     </van-tabbar>
@@ -57,7 +63,12 @@ export default {
 }
 </script>
 <style lang="scss">
-.a {
-  width: 10px;
+.van-nav-bar{
+  background: -webkit-linear-gradient(right, #1989fa, #4ecff5);
+}
+.main-container {
+  margin-top: 46PX;
+  height: calc(100vh - 96PX);
+  overflow: auto;
 }
 </style>
