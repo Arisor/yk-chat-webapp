@@ -3,9 +3,7 @@
     <van-nav-bar
       v-if="$route.meta.header"
       fixed
-      left-arrow
       :title="title"
-      @click-left="handleBack"
     />
     <keep-alive>
       <router-view class="cant-main-container" v-if="$route.meta.keepAlive"></router-view>
@@ -43,11 +41,6 @@ export default {
     }
   },
   methods: {
-    handleBack () {
-      this.$router.push({
-        name: 'login'
-      })
-    }
   },
   created () {},
   mounted () {},
@@ -63,8 +56,14 @@ export default {
 }
 </script>
 <style lang="scss">
-.van-nav-bar{
+.van-nav-bar {
   background: -webkit-linear-gradient(right, #1989fa, #4ecff5);
+  .van-nav-bar__title {
+    color: white;
+  }
+}
+.van-hairline--bottom::after {
+  border-bottom-width: 0;
 }
 .cant-main-container {
   margin-top: 46px;

@@ -28,7 +28,8 @@ import {
   CellGroup,
   NavBar,
   Image,
-  Toast
+  Toast,
+  Dialog
 } from 'vant'
 let comps = [
   Button,
@@ -55,7 +56,8 @@ let comps = [
   CellGroup,
   NavBar,
   Image,
-  Toast
+  Toast,
+  Dialog
 ]
 for (let comp of comps) {
   Vue.use(comp)
