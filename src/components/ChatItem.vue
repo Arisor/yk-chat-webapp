@@ -28,7 +28,7 @@ export default {
 
   methods: {
     lookInfo () {
-      console.log('href', this.href)
+      // console.log('href', this.href)
       this.$router.push(`/user_info/${this.href}`)
     }
   }
