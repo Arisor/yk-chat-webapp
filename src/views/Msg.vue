@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="msg-wrapper">
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-cell
         v-for="item in list"
@@ -8,7 +8,7 @@
         title="老🐖"
         value="00:59"
         :label="item.word || '喂喂喂'"
-        @click="handleClick"
+        @click="handleClick('老🐖')"
       >
         <van-image
           round
@@ -27,9 +27,7 @@ export default {
   components: {},
   data () {
     return {
-      list: [{
-
-      }],
+      list: [],
       loading: false,
       finished: false
     }
@@ -58,8 +56,13 @@ export default {
         }
       }, 1000)
     },
-    handleClick () {
-      this.$toast('小垃圾')
+    handleClick (userId) {
+      this.$router.push({
+        name: 'private_chat',
+        params: {
+          userId
+        }
+      })
     }
   },
   created () {},

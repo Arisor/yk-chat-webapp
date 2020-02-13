@@ -3,12 +3,14 @@
     <van-nav-bar
       v-if="$route.meta.header"
       fixed
-      :title="title"
+      :title="$store.getters.titleGetter"
+      :left-arrow="!$route.meta.footer"
+      @click-left="onClickLeft"
     />
     <keep-alive>
-      <router-view class="cant-main-container" v-if="$route.meta.keepAlive"></router-view>
+      <router-view :class="className" v-if="$route.meta.keepAlive"></router-view>
     </keep-alive>
-    <router-view class="cant-main-container" v-if="!$route.meta.keepAlive"></router-view>
+    <router-view :class="className" v-if="!$route.meta.keepAlive"></router-view>
     <van-tabbar v-model="active" v-if="$route.meta.footer" fixed>
       <van-tabbar-item icon="more" replace to="/msg" info="80">消息</van-tabbar-item>
       <van-tabbar-item icon="friends" replace to="/friend">联系人</van-tabbar-item>
@@ -20,27 +22,31 @@
 export default {
   data () {
     return {
-      active: 0,
-      title: '消息'
+      active: -1
     }
   },
-  computed: {},
-  watch: {
-    active (data) {
-      switch (data) {
-        case 0:
-          this.title = '消息'
-          break
-        case 1:
-          this.title = '联系人'
-          break
-        case 2:
-          this.title = '我的'
-          break
+  computed: {
+    className () {
+      const header = this.$route.meta.header
+      const footer = this.$route.meta.footer
+      if (header && footer) {
+        return 'cant-hasHeader-hasFooter'
+      } else if (header && !footer) {
+        return 'cant-hasHeader-noFooter'
+      } else {
+        return 'cant-noHeader-noFooter'
       }
     }
   },
+  watch: {
+    active (data) {
+      this.$store.dispatch('titleAction', this.$route.meta.title)
+    }
+  },
   methods: {
+    onClickLeft () {
+      this.$router.go(-1)
+    }
   },
   created () {},
   mounted () {},
@@ -56,6 +62,9 @@ export default {
 }
 </script>
 <style lang="scss">
+* {
+  box-sizing: border-box;
+}
 .van-nav-bar {
   background: -webkit-linear-gradient(right, #1989fa, #4ecff5);
   .van-nav-bar__title {
@@ -65,9 +74,16 @@ export default {
 .van-hairline--bottom::after {
   border-bottom-width: 0;
 }
-.cant-main-container {
+.cant-hasHeader-hasFooter {
   margin-top: 46px;
   height: calc(100vh - 96px);
   overflow: auto;
+}
+.cant-noHeader-noFooter {
+  height: 100vh;
+}
+.cant-hasHeader-noFooter {
+  margin-top: 46px;
+  height: calc(100vh - 46px);
 }
 </style>

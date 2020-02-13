@@ -42,8 +42,6 @@ export default {
 </script>
 <style lang='scss' scoped>
 .login-layout {
-  height: 100vh !important;
-  margin-top: 0;
   display: flex;
   justify-content: center;
   align-items: center;

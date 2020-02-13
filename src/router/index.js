@@ -16,9 +16,21 @@ const routes = [
     meta: {
       title: '消息',
       requireAuth: true,
-      keepAlive: true,
+      keepAlive: false,
       header: true,
       footer: true
+    }
+  },
+  {
+    path: '/private_chat/:userId',
+    name: 'private_chat',
+    component: () => import('@/views/PrivateChat.vue'),
+    meta: {
+      title: '私聊',
+      requireAuth: true,
+      keepAlive: false,
+      header: true,
+      footer: false
     }
   },
   {
@@ -28,7 +40,7 @@ const routes = [
     meta: {
       title: '联系',
       requireAuth: true,
-      keepAlive: true,
+      keepAlive: false,
       header: true,
       footer: true
     }
@@ -40,7 +52,7 @@ const routes = [
     meta: {
       title: '我的',
       requireAuth: true,
-      keepAlive: true,
+      keepAlive: false,
       header: true,
       footer: true
     }
