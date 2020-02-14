@@ -5,7 +5,7 @@
         <div class="is-login" @click="handleClickLogin">登录</div>
         <div class="is-register" @click="handleClickRegister">注册</div>
       </div>
-      <div class="login-title">Login</div>
+      <div class="login-title">Register</div>
       <input class="user-name-input" type="text" placeholder="用户名" v-model="userName" />
       <input class="password-input" type="password" placeholder="密码" v-model="password" />
       <van-button
@@ -14,9 +14,9 @@
         round
         :loading="loading"
         type="info"
-        text="登录"
-        loading-text="登录中..."
-        @click="handleLogin"
+        text="注册"
+        loading-text="注册中..."
+        @click="handleRegister"
       />
     </div>
   </div>
@@ -36,16 +36,15 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    handleLogin () {
+    handleRegister () {
       this.loading = true
       // login()
       //   .then(res => {
       //     console.log(res)
       //   })
       setTimeout(() => {
-        this.$store.dispatch('addTokenAction', 123)
         this.$router.push({
-          name: 'msg'
+          name: 'login'
         })
       }, 2000)
     },
@@ -87,14 +86,14 @@ export default {
       font-size: 40px;
       margin-top: 50px;
       color: #fff;
-      .is-login {
+      .is-register {
         color: #2898ee;
       }
     }
     .login-title {
       font-family: system-ui;
       color: #fff;
-      letter-spacing: 20px;
+      letter-spacing: 10px;
       font-size: 50px;
       margin: 150px 0;
     }

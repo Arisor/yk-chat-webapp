@@ -25,6 +25,7 @@ export default {
         title: '提示',
         message: '是否退出登录?'
       }).then(() => {
+        this.$store.dispatch('removeTokenAction')
         this.$router.push({
           name: 'login'
         })
