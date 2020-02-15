@@ -17,7 +17,6 @@ const routes = [
     component: () => import('@/views/Msg.vue'),
     meta: {
       title: '消息',
-      requireAuth: true,
       keepAlive: false,
       header: true,
       footer: true
@@ -29,7 +28,6 @@ const routes = [
     component: () => import('@/views/PrivateChat.vue'),
     meta: {
       title: '私聊',
-      requireAuth: true,
       keepAlive: false,
       header: true,
       footer: false
@@ -40,8 +38,7 @@ const routes = [
     name: 'friend',
     component: () => import('@/views/Friend.vue'),
     meta: {
-      title: '联系',
-      requireAuth: true,
+      title: '联系人',
       keepAlive: false,
       header: true,
       footer: true
@@ -53,10 +50,42 @@ const routes = [
     component: () => import('@/views/Me.vue'),
     meta: {
       title: '我的',
-      requireAuth: true,
       keepAlive: false,
       header: true,
       footer: true
+    }
+  },
+  {
+    path: '/new_friend',
+    name: 'new_friend',
+    component: () => import('@/views/NewFriend.vue'),
+    meta: {
+      title: '新朋友',
+      keepAlive: false,
+      header: true,
+      footer: false
+    }
+  },
+  {
+    path: '/find_group',
+    name: 'find_group',
+    component: () => import('@/views/FindGroup.vue'),
+    meta: {
+      title: '找群',
+      keepAlive: false,
+      header: true,
+      footer: false
+    }
+  },
+  {
+    path: '/find_friend',
+    name: 'find_friend',
+    component: () => import('@/views/FindFriend.vue'),
+    meta: {
+      title: '找人',
+      keepAlive: false,
+      header: true,
+      footer: false
     }
   },
   {
@@ -65,7 +94,6 @@ const routes = [
     component: Login,
     meta: {
       title: '登录',
-      requireAuth: false,
       keepAlive: false,
       header: false,
       footer: false
@@ -77,7 +105,6 @@ const routes = [
     component: Register,
     meta: {
       title: '注册',
-      requireAuth: false,
       keepAlive: false,
       header: false,
       footer: false

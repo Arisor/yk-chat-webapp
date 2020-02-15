@@ -6,30 +6,32 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     title: '',
-    token: ''
+    // token: '',
+    userInfo: {}
   },
   mutations: {
     titleMutation (state, data) {
       state.title = data
     },
-    addTokenMutation (state, data) {
-      state.token = data
-      localStorage.setItem('token', data)
+    addUserInfoMutation (state, data) {
+      state.userInfo = data
+      localStorage.setItem('userInfo', JSON.stringify(data))
     },
-    removeTokenMutation (state) {
-      state.token = ''
-      localStorage.removeItem('token')
+    removeUserInfoMutation (state) {
+      state.userInfo = {}
+      localStorage.removeItem('userInfo')
     }
+
   },
   actions: {
     titleAction ({ commit }, data) {
       commit('titleMutation', data)
     },
-    addTokenAction ({ commit }, data) {
-      commit('addTokenMutation', data)
+    addUserInfoAction ({ commit }, data) {
+      commit('addUserInfoMutation', data)
     },
     removeTokenAction ({ commit }) {
-      commit('removeTokenMutation')
+      commit('removeUserInfoMutation')
     }
   },
   modules: {
@@ -37,8 +39,12 @@ export default new Vuex.Store({
   getters: {
     titleGetter: state => state.title,
     tokenGetter: state => {
-      const token = state.token || localStorage.getItem('token')
+      const token = state.userInfo.token || (localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).token)
       return token
+    },
+    userIdGetter: state => {
+      const userId = state.userInfo.user_id || (localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).user_id)
+      return userId
     }
   }
 })

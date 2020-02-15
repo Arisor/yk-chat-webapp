@@ -1,12 +1,23 @@
 import request from '@/utils/request'
 
-export function login () {
+export function login (data) {
   return request({
-    url: 'login',
+    url: '/login',
     method: 'post',
-    data: {
-      name: '123',
-      password: '456'
-    }
+    data
+  })
+}
+export function register (data) {
+  return request({
+    url: '/register',
+    method: 'post',
+    data
+  })
+}
+export function getMsg (data) {
+  return request({
+    url: '/message',
+    method: 'post',
+    data
   })
 }

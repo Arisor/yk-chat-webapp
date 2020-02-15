@@ -6,7 +6,7 @@
         <div class="is-register" @click="handleClickRegister">注册</div>
       </div>
       <div class="login-title">Login</div>
-      <input class="user-name-input" type="text" placeholder="用户名" v-model="userName" />
+      <input class="user-name-input" type="text" placeholder="用户名" v-model="name" />
       <input class="password-input" type="password" placeholder="密码" v-model="password" />
       <van-button
         color="#1989fa"
@@ -23,13 +23,13 @@
 </template>
 
 <script>
-// import { login } from '@/api'
+import { login } from '@/api'
 export default {
   components: {},
   data () {
     return {
       loading: false,
-      userName: '',
+      name: '',
       password: ''
     }
   },
@@ -38,16 +38,20 @@ export default {
   methods: {
     handleLogin () {
       this.loading = true
-      // login()
-      //   .then(res => {
-      //     console.log(res)
-      //   })
-      setTimeout(() => {
-        this.$store.dispatch('addTokenAction', 123)
-        this.$router.push({
-          name: 'msg'
+      login({
+        name: this.name,
+        password: this.password
+      })
+        .then(res => {
+          this.loading = false
+          this.$store.dispatch('addUserInfoAction', res.data)
+          this.$router.push({
+            name: 'msg'
+          })
         })
-      }, 2000)
+        .catch(() => {
+          this.loading = false
+        })
     },
     handleClickLogin () {
       this.$router.push({
@@ -60,7 +64,9 @@ export default {
       })
     }
   },
-  created () {},
+  created () {
+    this.name = this.$route.query.name
+  },
   mounted () {}
 }
 </script>

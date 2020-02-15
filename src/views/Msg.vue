@@ -3,11 +3,11 @@
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-cell
         v-for="item in list"
-        :key="item.id"
+        :key="item.name"
         size="large"
-        title="老🐖"
-        value="00:59"
-        :label="item.word || '喂喂喂'"
+        :title="item.name || '老🐖'"
+        :value="item.time"
+        :label="item.message || '喂喂喂'"
         @click="handleClick('老🐖')"
       >
         <van-image
@@ -15,7 +15,7 @@
           slot="icon"
           width="1rem"
           height="1rem"
-          :src="require('@/assets/avatar.gif')"
+          :src="item.avator || require('@/assets/avatar.gif')"
         />
       </van-cell>
     </van-list>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { getMsg } from '@/api'
 export default {
   components: {},
   data () {
@@ -36,25 +37,31 @@ export default {
   watch: {},
   methods: {
     onLoad () {
-      // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        const words = ['喂喂喂', '垃圾', '沙皮']
-        for (let i = 0; i < 10; i++) {
-          this.list.push({
-            id: this.list.length + 1,
-            word: words[Math.floor(Math.random() * 3)]
+      this.loading = true
+      getMsg({
+        user_id: this.$store.getters.userIdGetter
+      })
+        .then((res) => {
+          console.log(res.data)
+          res.data.privateList.forEach(element => {
+            this.list.push({
+              name: element.name,
+              message: element.message,
+              time: element.time,
+              avator: element.avator
+            })
           })
-        }
-
-        // 加载状态结束
-        this.loading = false
-
-        // 数据全部加载完成
-        if (this.list.length >= 80) {
+          // this.list.push({
+          //   id: this.list.length + 1,
+          //   word: words[Math.floor(Math.random() * 3)]
+          // })
+          this.loading = false
           this.finished = true
-        }
-      }, 1000)
+        })
+        .catch(() => {
+          this.loading = false
+          this.finished = true
+        })
     },
     handleClick (userId) {
       this.$router.push({
@@ -65,7 +72,9 @@ export default {
       })
     }
   },
-  created () {},
+  created () {
+    // console.log(this.$store.getters.userIdGetter)
+  },
   mounted () {}
 }
 </script>

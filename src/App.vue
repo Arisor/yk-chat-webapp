@@ -39,7 +39,7 @@ export default {
     }
   },
   watch: {
-    active (data) {
+    $route () {
       this.$store.dispatch('titleAction', this.$route.meta.title)
     }
   },
@@ -48,7 +48,8 @@ export default {
       this.$router.go(-1)
     }
   },
-  created () {},
+  created () {
+  },
   mounted () {},
   beforeUpdate () {
     if (this.$route.name === 'msg') {

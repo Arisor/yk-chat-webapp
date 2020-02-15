@@ -1,5 +1,7 @@
 import axios from 'axios'
-// import store from '@/store'
+import { Toast } from 'vant'
+import store from '@/store'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -13,12 +15,12 @@ service.interceptors.request.use(
   config => {
     // do something before request is sent
 
-    // if (store.getters.token) {
-    //   // let each request carry token
-    //   // ['X-Token'] is a custom headers key
-    //   // please modify it according to the actual situation
-    //   config.headers['X-Token'] = getToken()
-    // }
+    if (store.getters.tokenGetter) {
+      // let each request carry token
+      // ['X-Token'] is a custom headers key
+      // please modify it according to the actual situation
+      config.headers['Authorization'] = store.getters.tokenGetter
+    }
     return config
   },
   error => {
@@ -41,22 +43,29 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const res = response.data
-    // console.log('1123132')
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
+    if (response.status === 200) {
+      const res = response.data
+      if (res.success) {
+        return Promise.resolve(res)
+      } else {
+        Toast(res.message)
+        return Promise.reject(new Error(res.message || 'Error'))
       }
-      return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      return res
+      Toast('系统繁忙')
+      return Promise.reject(new Error(response.statusText || 'Error'))
     }
   },
   error => {
-    console.log('err123' + error) // for debug
-    return Promise.reject(error)
+    if (error.response.status === 401) {
+      // 未授权返回登录页
+      store.dispatch('removeTokenAction')
+      router.push({
+        name: 'login'
+      })
+    }
+    // console.log(error.response) // for debug
+    // return Promise.reject(error)
   }
 )
 
