@@ -66,7 +66,7 @@ export default {
     }
   },
   created () {
-    console.log('friend')
+    // console.log('friend')
   },
   mounted () {
 
