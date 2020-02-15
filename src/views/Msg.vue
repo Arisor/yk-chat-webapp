@@ -5,17 +5,18 @@
         v-for="item in list"
         :key="item.name"
         size="large"
-        :title="item.name || '老🐖'"
-        :value="item.time"
-        :label="item.message || '喂喂喂'"
-        @click="handleClick('老🐖')"
+        :title="item.name"
+        :value="1581779869744 | calendar"
+        :label="item.message"
+        @click="handleClick(item.name)"
       >
         <van-image
+          class="avatar"
           round
           slot="icon"
-          width="1rem"
-          height="1rem"
-          :src="item.avator || require('@/assets/avatar.gif')"
+          width="1.2rem"
+          height="1.2rem"
+          :src="item.isGroup ? require('@/assets/group.png') : require('@/assets/friend.png')"
         />
       </van-cell>
     </van-list>
@@ -41,20 +42,25 @@ export default {
       getMsg({
         user_id: this.$store.getters.userIdGetter
       })
-        .then((res) => {
-          console.log(res.data)
+        .then(res => {
           res.data.privateList.forEach(element => {
             this.list.push({
+              isGroup: false,
               name: element.name,
               message: element.message,
               time: element.time,
               avator: element.avator
             })
           })
-          // this.list.push({
-          //   id: this.list.length + 1,
-          //   word: words[Math.floor(Math.random() * 3)]
-          // })
+          res.data.groupList.forEach(element => {
+            this.list.push({
+              isGroup: true,
+              name: element.group_name,
+              message: element.message,
+              time: element.time,
+              avator: element.avator
+            })
+          })
           this.loading = false
           this.finished = true
         })
@@ -79,4 +85,7 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
+.avatar {
+  margin-right: 20px;
+}
 </style>

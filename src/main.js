@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import 'lib-flexible'
+import '@/utils/date'
 import {
   Button,
   Uploader,
@@ -31,6 +32,7 @@ import {
   Toast,
   Dialog
 } from 'vant'
+
 let comps = [
   Button,
   Uploader,
@@ -62,6 +64,7 @@ let comps = [
 for (let comp of comps) {
   Vue.use(comp)
 }
+
 Vue.config.productionTip = false
 
 new Vue({
