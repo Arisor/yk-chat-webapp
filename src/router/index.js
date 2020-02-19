@@ -23,7 +23,7 @@ const routes = [
     }
   },
   {
-    path: '/private_chat/:userId',
+    path: '/private_chat/:id/:name',
     name: 'private_chat',
     component: () => import('@/views/PrivateChat.vue'),
     meta: {

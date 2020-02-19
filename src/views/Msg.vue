@@ -6,9 +6,8 @@
         :key="item.name"
         size="large"
         :title="item.name"
-        :value="1581779869744 | calendar"
         :label="item.message"
-        @click="handleClick(item.name)"
+        @click="handleClick(item.id,item.name)"
       >
         <van-image
           class="avatar"
@@ -18,6 +17,10 @@
           height="1.2rem"
           :src="item.isGroup ? require('@/assets/group.png') : require('@/assets/friend.png')"
         />
+        <div slot="default" class="right-wrapper">
+          <div class="time-wrapper">{{ item.time | calendar }}</div>
+          <CountIcon :num="item.count" />
+        </div>
       </van-cell>
     </van-list>
   </div>
@@ -25,8 +28,9 @@
 
 <script>
 import { getMsg } from '@/api'
+import CountIcon from '@/components/CountIcon'
 export default {
-  components: {},
+  components: { CountIcon },
   data () {
     return {
       list: [],
@@ -43,23 +47,29 @@ export default {
         user_id: this.$store.getters.userIdGetter
       })
         .then(res => {
+          this.list = []
           res.data.privateList.forEach(element => {
             this.list.push({
               isGroup: false,
+              id: element.other_user_id,
               name: element.name,
               message: element.message,
-              time: element.time,
-              avator: element.avator
+              count: element.count.toString(),
+              time: element.time || element.be_friend_time
             })
           })
-          res.data.groupList.forEach(element => {
-            this.list.push({
-              isGroup: true,
-              name: element.group_name,
-              message: element.message,
-              time: element.time,
-              avator: element.avator
-            })
+          // 交流群暂未开发
+          // res.data.groupList.forEach(element => {
+          //   this.list.push({
+          //     isGroup: true,
+          //     id: element.group_id,
+          //     name: element.group_name,
+          //     message: element.message,
+          //     time: element.time || element.creater_time
+          //   })
+          // })
+          this.list.sort((a, b) => {
+            return b.time - a.time
           })
           this.loading = false
           this.finished = true
@@ -69,11 +79,12 @@ export default {
           this.finished = true
         })
     },
-    handleClick (userId) {
+    handleClick (id, name) {
       this.$router.push({
         name: 'private_chat',
         params: {
-          userId
+          id,
+          name
         }
       })
     }
@@ -81,11 +92,24 @@ export default {
   created () {
     // console.log(this.$store.getters.userIdGetter)
   },
-  mounted () {}
+  mounted () {},
+  sockets: {
+    getPrivateMsg () {
+      this.onLoad()
+    }
+  }
 }
 </script>
 <style lang='scss' scoped>
 .avatar {
   margin-right: 20px;
+}
+.right-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  .count-icon {
+    margin-right: 10px;
+  }
 }
 </style>

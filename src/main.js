@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import 'lib-flexible'
 import '@/utils/date'
+import VueSocketIO from 'vue-socket.io'
 import {
   Button,
   Uploader,
@@ -30,8 +31,15 @@ import {
   NavBar,
   Image,
   Toast,
-  Dialog
+  Dialog,
+  Search,
+  Icon
 } from 'vant'
+
+Vue.use(new VueSocketIO({
+  debug: process.env.NODE_ENV === 'development',
+  connection: process.env.VUE_APP_BASE_API.slice(0, -4)
+}))
 
 let comps = [
   Button,
@@ -59,7 +67,9 @@ let comps = [
   NavBar,
   Image,
   Toast,
-  Dialog
+  Dialog,
+  Search,
+  Icon
 ]
 for (let comp of comps) {
   Vue.use(comp)
@@ -67,8 +77,12 @@ for (let comp of comps) {
 
 Vue.config.productionTip = false
 
-new Vue({
+const vm = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+if (store.getters.tokenGetter) {
+  vm.$socket.emit('update', store.getters.userIdGetter)
+}

@@ -6,8 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     title: '',
-    // token: '',
-    userInfo: {}
+    userInfo: {},
+    msgCount: 0
   },
   mutations: {
     titleMutation (state, data) {
@@ -20,8 +20,10 @@ export default new Vuex.Store({
     removeUserInfoMutation (state) {
       state.userInfo = {}
       localStorage.removeItem('userInfo')
+    },
+    msgCountMutation (state, data) {
+      state.msgCount = data
     }
-
   },
   actions: {
     titleAction ({ commit }, data) {
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     removeTokenAction ({ commit }) {
       commit('removeUserInfoMutation')
+    },
+    msgCountAction ({ commit }, data) {
+      commit('msgCountMutation', data)
     }
   },
   modules: {
@@ -45,6 +50,13 @@ export default new Vuex.Store({
     userIdGetter: state => {
       const userId = state.userInfo.user_id || (localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).user_id)
       return userId
+    },
+    nameGetter: state => {
+      const name = state.userInfo.name || (localStorage.getItem('userInfo') && JSON.parse(localStorage.getItem('userInfo')).name)
+      return name
+    },
+    msgCountGetter: state => {
+      return state.msgCount
     }
   }
 })

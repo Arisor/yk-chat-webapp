@@ -44,6 +44,7 @@ export default {
       })
         .then(res => {
           this.loading = false
+          this.$socket.emit('login', res.data.user_id)
           this.$store.dispatch('addUserInfoAction', res.data)
           this.$router.push({
             name: 'msg'

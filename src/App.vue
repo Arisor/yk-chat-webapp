@@ -12,13 +12,14 @@
     </keep-alive>
     <router-view :class="className" v-if="!$route.meta.keepAlive"></router-view>
     <van-tabbar v-model="active" v-if="$route.meta.footer" fixed>
-      <van-tabbar-item icon="more" replace to="/msg" info="80">消息</van-tabbar-item>
+      <van-tabbar-item icon="more" replace to="/msg" :info="count">消息</van-tabbar-item>
       <van-tabbar-item icon="friends" replace to="/friend">联系人</van-tabbar-item>
       <van-tabbar-item icon="manager" replace to="/me">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
 <script>
+import { getUnReadCount } from '@/api'
 export default {
   data () {
     return {
@@ -36,6 +37,9 @@ export default {
       } else {
         return 'cant-noHeader-noFooter'
       }
+    },
+    count () {
+      return this.$store.getters.msgCountGetter
     }
   },
   watch: {
@@ -46,11 +50,17 @@ export default {
   methods: {
     onClickLeft () {
       this.$router.go(-1)
+    },
+    getUnReadCount () {
+      getUnReadCount()
+        .then((res) => {
+          this.$store.dispatch('msgCountAction', res.data.count)
+        })
     }
   },
   created () {
+    this.getUnReadCount()
   },
-  mounted () {},
   beforeUpdate () {
     if (this.$route.name === 'msg') {
       this.active = 0
@@ -58,6 +68,11 @@ export default {
       this.active = 1
     } else if (this.$route.name === 'me') {
       this.active = 2
+    }
+  },
+  sockets: {
+    getPrivateMsg () {
+      this.getUnReadCount()
     }
   }
 }

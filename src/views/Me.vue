@@ -1,10 +1,10 @@
 <template>
   <div class="me-wrapper">
     <div class="avatar-wrapper">
-      <van-image lazy-load round width="2rem" height="2rem" :src="require('@/assets/avatar.gif')" />
+      <van-image lazy-load round width="2rem" height="2rem" :src="require('@/assets/friend.png')" />
       <div class="user-info-wrapper">
-        <div class="username-wrapper">老🐖</div>
-        <div class="account-wrapper">账号:&nbsp;1521318801</div>
+        <div class="username-wrapper">{{ $store.getters.nameGetter }}</div>
+        <div class="account-wrapper">账号:&nbsp;xxxxxxxxx</div>
       </div>
     </div>
     <van-button round color="linear-gradient(to left, #1989fa, #4ecff5)" size="large" @click="handleLogout">退出登录</van-button>

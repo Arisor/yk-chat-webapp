@@ -65,7 +65,7 @@ service.interceptors.response.use(
       })
     }
     // console.log(error.response) // for debug
-    // return Promise.reject(error)
+    return Promise.reject(error)
   }
 )
 
