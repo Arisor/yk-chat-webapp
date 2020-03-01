@@ -39,7 +39,7 @@ export default {
       }
     },
     count () {
-      return this.$store.getters.msgCountGetter
+      return this.$store.getters.msgCountGetter || ''
     }
   },
   watch: {
@@ -52,14 +52,15 @@ export default {
       this.$router.go(-1)
     },
     getUnReadCount () {
-      getUnReadCount()
-        .then((res) => {
-          this.$store.dispatch('msgCountAction', res.data.count)
-        })
+      getUnReadCount().then(res => {
+        this.$store.dispatch('msgCountAction', res.data.count)
+      })
     }
   },
   created () {
-    this.getUnReadCount()
+    if (this.$route.name !== 'login' && this.$route.name !== 'register') {
+      this.getUnReadCount()
+    }
   },
   beforeUpdate () {
     if (this.$route.name === 'msg') {

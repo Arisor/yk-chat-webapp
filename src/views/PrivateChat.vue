@@ -127,6 +127,9 @@ export default {
       setIsRead({
         from_user: this.$route.params.id
       })
+        .then(() => {
+          this.getUnReadCount()
+        })
     },
     getUnReadCount () {
       getUnReadCount()
@@ -138,7 +141,6 @@ export default {
   created () {
     this.$store.dispatch('titleAction', this.$route.params.name)
     this.setIsRead()
-    this.getUnReadCount()
   },
   sockets: {
     getPrivateMsg (data) {
