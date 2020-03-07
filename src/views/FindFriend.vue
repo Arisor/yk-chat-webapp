@@ -10,6 +10,7 @@
       shape="round"
       background="-webkit-linear-gradient(right, #1989fa, #4ecff5)"
       placeholder="请输入要搜索的用户名"
+      @input="handleInput"
     />
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" :immediate-check="false">
       <van-cell
@@ -34,6 +35,7 @@
 
 <script>
 import { findPeople, isFriend, requestNewFriend, isRequestFriends } from '@/api'
+import { debounce } from '@/utils/tools'
 export default {
   components: {},
   data () {
@@ -48,23 +50,6 @@ export default {
     }
   },
   computed: {},
-  watch: {
-    value (data) {
-      this.loading = true
-      findPeople({ name: data })
-        .then(res => {
-          this.list = res.data.userInfo.filter(item => {
-            return item.id !== this.$store.getters.userIdGetter
-          })
-          this.loading = false
-          this.finished = true
-        })
-        .catch(() => {
-          this.loading = false
-          this.finished = true
-        })
-    }
-  },
   methods: {
     async handleClick (id, name) {
       const res1 = await isFriend({
@@ -91,12 +76,27 @@ export default {
         status: 0
       })
         .then(res => {
-
+          this.$socket.emit('sendRequest', {
+            to_user: this.to_user
+          })
         })
-    }
-  },
-  created () {},
-  mounted () {}
+    },
+    handleInput: debounce(function (data) {
+      this.loading = true
+      findPeople({ name: data[0] })
+        .then(res => {
+          this.list = res.data.userInfo.filter(item => {
+            return item.id !== this.$store.getters.userIdGetter
+          })
+          this.loading = false
+          this.finished = true
+        })
+        .catch(() => {
+          this.loading = false
+          this.finished = true
+        })
+    }, 500)
+  }
 }
 </script>
 <style lang='scss' scoped>

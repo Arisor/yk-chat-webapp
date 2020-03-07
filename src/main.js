@@ -33,7 +33,8 @@ import {
   Toast,
   Dialog,
   Search,
-  Icon
+  Icon,
+  Tag
 } from 'vant'
 
 Vue.use(new VueSocketIO({
@@ -69,7 +70,8 @@ let comps = [
   Toast,
   Dialog,
   Search,
-  Icon
+  Icon,
+  Tag
 ]
 for (let comp of comps) {
   Vue.use(comp)

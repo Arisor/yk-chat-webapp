@@ -2,7 +2,7 @@
   <div class="friends-wrapper">
     <van-cell title="新朋友" :to="{name: 'new_friend'}" is-link>
       <template slot="default">
-        <van-tag type="danger">标签</van-tag>
+        <van-tag round type="danger" v-show="hasNewFriend">New</van-tag>
       </template>
     </van-cell>
     <van-cell title="加群" :to="{name: 'find_group'}" is-link />
@@ -29,17 +29,17 @@
 </template>
 
 <script>
-import { getMyFriends } from '@/api'
+import { getMyFriends, getNewFriends } from '@/api'
 export default {
   components: {},
   data () {
     return {
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      hasNewFriend: false
     }
   },
-  computed: {},
   watch: {},
   methods: {
     onLoad () {
@@ -63,12 +63,22 @@ export default {
           name
         }
       })
+    },
+    getNewFriends () {
+      getNewFriends()
+        .then(res => {
+          this.hasNewFriend = res.data.newFriends.some(item => item.status === 0)
+        })
     }
   },
-  created () {
-    // console.log('friend')
+  mounted () {
+    this.getNewFriends()
   },
-  mounted () {}
+  sockets: {
+    getresponse () {
+      this.hasNewFriend = true
+    }
+  }
 }
 </script>
 <style lang='scss' scoped>
