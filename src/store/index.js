@@ -30,7 +30,7 @@ export default new Vuex.Store({
       commit('titleMutation', data)
     },
     addUserInfoAction ({ commit }, data) {
-      commit('addUserInfoMutation', data)
+      return commit('addUserInfoMutation', data)
     },
     removeTokenAction ({ commit }) {
       commit('removeUserInfoMutation')

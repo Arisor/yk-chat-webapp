@@ -5,7 +5,7 @@
         <van-tag round type="danger" v-show="hasNewFriend">New</van-tag>
       </template>
     </van-cell>
-    <van-cell title="加群" :to="{name: 'find_group'}" is-link />
+    <!-- <van-cell title="加群" :to="{name: 'find_group'}" is-link /> -->
     <van-cell title="加朋友" :to="{name: 'find_friend'}" is-link />
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-cell

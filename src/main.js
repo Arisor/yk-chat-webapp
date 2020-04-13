@@ -37,6 +37,9 @@ import {
   Tag
 } from 'vant'
 
+import animate from 'animate.css'
+Vue.use(animate)
+
 Vue.use(new VueSocketIO({
   debug: process.env.NODE_ENV === 'development',
   connection: process.env.VUE_APP_BASE_API.slice(0, -4)
