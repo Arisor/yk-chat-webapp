@@ -1,24 +1,26 @@
 <template>
   <div class="login-layout">
-    <div class="login-form">
-      <div class="login-or-register">
-        <div class="is-login" @click="handleClickLogin">登录</div>
-        <div class="is-register" @click="handleClickRegister">注册</div>
+    <transition enter-active-class="animated slideInDown" leave-active-class="animated slideOutUp">
+      <div class="login-form" v-show="isShow">
+        <div class="login-or-register">
+          <div class="is-login" @click="handleClickLogin">登录</div>
+          <div class="is-register" @click="handleClickRegister">注册</div>
+        </div>
+        <div class="login-title">Register</div>
+        <input class="user-name-input" type="text" placeholder="用户名" v-model="name" />
+        <input class="password-input" type="password" placeholder="密码" v-model="password" />
+        <van-button
+          color="#1989fa"
+          block
+          round
+          :loading="loading"
+          type="info"
+          text="注册"
+          loading-text="注册中..."
+          @click="handleRegister"
+        />
       </div>
-      <div class="login-title">Register</div>
-      <input class="user-name-input" type="text" placeholder="用户名" v-model="name" />
-      <input class="password-input" type="password" placeholder="密码" v-model="password" />
-      <van-button
-        color="#1989fa"
-        block
-        round
-        :loading="loading"
-        type="info"
-        text="注册"
-        loading-text="注册中..."
-        @click="handleRegister"
-      />
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -30,7 +32,8 @@ export default {
     return {
       loading: false,
       name: '',
-      password: ''
+      password: '',
+      isShow: false
     }
   },
   computed: {},
@@ -45,12 +48,17 @@ export default {
         .then(res => {
           this.loading = false
           this.$toast(res.message)
-          this.$router.push({
-            name: 'login',
-            query: {
-              name: this.name
-            }
-          })
+          this.timer1 = setTimeout(() => {
+            this.isShow = false
+          }, 1000)
+          this.timer2 = setTimeout(() => {
+            this.$router.push({
+              name: 'login',
+              query: {
+                name: this.name
+              }
+            })
+          }, 2000)
         })
         .catch(() => {
           this.loading = false
@@ -67,8 +75,19 @@ export default {
       })
     }
   },
-  created () {},
-  mounted () {}
+  created () {
+    this.timer = setTimeout(() => {
+      this.isShow = true
+    })
+  },
+  beforeDestroy () {
+    clearInterval(this.timer)
+    clearInterval(this.timer1)
+    clearInterval(this.timer2)
+    this.timer = null
+    this.timer1 = null
+    this.timer2 = null
+  }
 }
 </script>
 <style lang='scss' scoped>
