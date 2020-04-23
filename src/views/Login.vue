@@ -6,7 +6,7 @@
     >
       <div class="login-form" v-show="isShow">
         <div class="login-or-register">
-          <div class="is-login" @click="handleClickLogin">登录</div>
+          <div class="is-login" @click="handleClickLogin">登录1</div>
           <div class="is-register" @click="handleClickRegister">注册</div>
         </div>
         <div class="login-title">Login</div>
