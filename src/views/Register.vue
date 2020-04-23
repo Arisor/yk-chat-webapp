@@ -101,7 +101,7 @@ export default {
     background: -webkit-linear-gradient(bottom, #1989fa, #4ecff5);
     width: 100%;
     max-width: 660px;
-    height: 80%;
+    height: 1060px;
     box-shadow: 0 32px 62px 0 rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
