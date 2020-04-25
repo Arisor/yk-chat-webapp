@@ -1,9 +1,6 @@
 <template>
   <div class="login-layout">
-    <transition
-      enter-active-class="animated slideInDown"
-      leave-active-class="animated slideOutUp"
-    >
+    <transition enter-active-class="animated slideInDown" leave-active-class="animated slideOutUp">
       <div class="login-form" v-show="isShow">
         <div class="login-or-register">
           <div class="is-login" @click="handleClickLogin">登录</div>
@@ -51,17 +48,16 @@ export default {
         .then(res => {
           this.loading = false
           this.$socket.emit('login', res.data.user_id)
-          this.$store.dispatch('addUserInfoAction', res.data)
-            .then(() => {
-              this.timer1 = setTimeout(() => {
-                this.isShow = false
-              }, 1000)
-              this.timer2 = setTimeout(() => {
-                this.$router.push({
-                  name: 'msg'
-                })
-              }, 2000)
-            })
+          this.$store.dispatch('addUserInfoAction', res.data).then(() => {
+            this.timer1 = setTimeout(() => {
+              this.isShow = false
+            }, 1000)
+            this.timer2 = setTimeout(() => {
+              this.$router.push({
+                name: 'msg'
+              })
+            }, 2000)
+          })
         })
         .catch(() => {
           this.loading = false

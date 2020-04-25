@@ -5,7 +5,7 @@ import store from './store'
 import 'lib-flexible'
 import '@/utils/date'
 import VueSocketIO from 'vue-socket.io'
-import '@/styles/global.scss'
+// import '@/styles/global.scss'
 import {
   Button,
   Uploader,

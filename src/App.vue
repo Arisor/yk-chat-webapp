@@ -92,15 +92,15 @@ export default {
   border-bottom-width: 0;
 }
 .cant-hasHeader-hasFooter {
-  margin-top: 46px;
-  height: calc(100vh - 96px);
+  margin-top: 45px;
+  height: calc(100vh - 95px);
   overflow: auto;
 }
 .cant-noHeader-noFooter {
   height: 100vh;
 }
 .cant-hasHeader-noFooter {
-  margin-top: 46px;
-  height: calc(100vh - 46px);
+  margin-top: 45px;
+  height: calc(100vh - 45px);
 }
 </style>
